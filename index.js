@@ -1,6 +1,7 @@
 const bpm = 145;
-var tick = 60_000 / bpm;
 const messageLimit = 12;
+
+const tick = 60_000 / bpm;
 
 let messages = [];
 let video, subCount, viewers;
@@ -76,16 +77,6 @@ async function randomString(maxChars) {
 
 async function mainLoop() {
   async function createMessage() {
-    function waitForImage(imgElem) {
-      return new Promise((res) => {
-        if (imgElem.complete) {
-          return res();
-        }
-        imgElem.onload = () => res();
-        imgElem.onerror = () => res();
-      });
-    }
-
     async function cycleNumber(number, min, max) {
       var range = max - min + 1;
 
@@ -113,7 +104,11 @@ async function mainLoop() {
     let msg = await randomString(14);
 
     let hash = await getSHA256Hash(user + msg);
-    let index = await cycleNumber(msg.length, 0, gravatarTypes.length - 1);
+    let index = await cycleNumber(
+      msg.length + user.length,
+      0,
+      gravatarTypes.length - 1
+    );
     image.src =
       "https://gravatar.com/avatar/" +
       hash +
@@ -133,17 +128,12 @@ async function mainLoop() {
     message.appendChild(image);
     message.appendChild(font1);
     message.appendChild(font2);
-
-    let start = Date.now();
-
-    await waitForImage(image);
-    tick = 60_000 / bpm - (Date.now() - start);
     list.appendChild(message);
     messages.unshift(message);
   }
 
   if (!video.paused && video.currentTime >= 30) {
-    await createMessage();
+    createMessage();
 
     for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
