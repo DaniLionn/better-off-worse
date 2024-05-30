@@ -1,0 +1,31 @@
+ul {
+    display: flex;
+    /* establish flex container */
+    flex-direction: column;
+    /* align children vertically */
+    list-style-type: none;
+    height: auto;
+}
+
+li:first-child {
+    margin-top: auto;
+    /* shift top li, and all li's beneath, to the bottom */
+}
+
+hr.solid {
+    border-top: 1px solid #bbb;
+}
+
+.vr {
+    border-left: 1px solid #bbb;
+    height: 546px
+}
+
+span {
+    font-family: Roboto, Arial, sans-serif;
+}
+
+span.light {
+    font-family: Roboto, Arial, sans-serif;
+    color: gray;
+}
