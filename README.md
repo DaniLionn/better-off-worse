@@ -1,4 +1,4 @@
-# better-off-worse
+# [better-off-worse](https://danilionn.github.io/better-off-worse/)
 
 An attempt of recreating the video of the song 'Better Off Worse' by CircusP with CSS, HTML and JavaScript.
 ![better off worse](https://danilionn.github.io/better-off-worse/assets/hq720.jpg)
