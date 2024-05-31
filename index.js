@@ -6,6 +6,14 @@ const tick = 60_000 / bpm;
 let messages = [];
 let video, subCount, viewers;
 
+let pfps;
+
+fetch("https://danilionn.github.io/danis-bot-website/assets/pfps.json")
+  .then((response) => response.json())
+  .then((json) => {
+    pfps = json;
+  });
+
 const gravatarTypes = [
   "identicon",
   "monsterid",
@@ -38,17 +46,6 @@ const abbrNum = (number, decPlaces) => {
 
   return number;
 };
-
-const getSHA256Hash = async (input) => {
-  const textAsBuffer = new TextEncoder().encode(input);
-  const hashBuffer = await window.crypto.subtle.digest("SHA-256", textAsBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hash = hashArray
-    .map((item) => item.toString(16).padStart(2, "0"))
-    .join("");
-  return hash;
-};
-
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -77,22 +74,6 @@ async function randomString(maxChars) {
 
 async function mainLoop() {
   async function createMessage() {
-    async function cycleNumber(number, min, max) {
-      var range = max - min + 1;
-
-      var result = ((((number - min) % range) + range) % range) + min;
-
-      if (result > max) {
-        result = result - max;
-      }
-
-      if (result < min) {
-        result = min;
-      }
-
-      return result;
-    }
-
     let list = document.getElementById("chat");
 
     let message = document.createElement("li");
@@ -103,17 +84,7 @@ async function mainLoop() {
     let user = await randomString(7);
     let msg = await randomString(14);
 
-    let hash = await getSHA256Hash(user + msg);
-    let index = await cycleNumber(
-      msg.length + user.length,
-      0,
-      gravatarTypes.length - 1
-    );
-    image.src =
-      "https://gravatar.com/avatar/" +
-      hash +
-      "?s=200&r=pg&d=" +
-      gravatarTypes[index];
+    image.src = "assets/pfps/" + pfps[Math.floor(Math.random() * pfps.length)];
     image.width = 32;
     image.height = 32;
     image.style = "border-radius: 50%";
