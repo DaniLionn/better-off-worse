@@ -29,3 +29,17 @@ span.light {
     font-family: Roboto, Arial, sans-serif;
     color: gray;
 }
+
+/* @keyframes slideUp {
+    from {
+        bottom: var(--startPos)
+    }
+
+    to {
+        bottom: var(--endPos)
+    }
+}
+
+.slider {
+    animation: slideUp 1s ease;
+} */

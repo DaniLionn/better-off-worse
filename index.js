@@ -1,5 +1,5 @@
 const bpm = 145;
-const messageLimit = 12;
+const messageLimit = 13;
 
 const tick = 60_000 / bpm;
 let totalTicks = 0;
@@ -76,7 +76,7 @@ async function mainLoop() {
   async function createMessage() {
     let list = document.getElementById("chat");
 
-    let message = document.createElement("li");
+    let message = document.createElement("div");
     let image = document.createElement("img");
     let font1 = document.createElement("span");
     let font2 = document.createElement("span");
@@ -99,6 +99,7 @@ async function mainLoop() {
     message.appendChild(image);
     message.appendChild(font1);
     message.appendChild(font2);
+
     list.appendChild(message);
     messages.unshift(message);
   }
@@ -106,6 +107,18 @@ async function mainLoop() {
   if (!video.paused && video.currentTime >= 30) {
     if (totalTicks % 2) {
       createMessage();
+
+      // for (let i = 0; i < messages.length; i++) {
+      //   const message = messages[i];
+      //   const nextMessage = messages[i + 1];
+      //   if (messages.length > 1 && nextMessage) {
+      //     let start = message.getBoundingClientRect();
+      //     let end = nextMessage.getBoundingClientRect();
+      //     message.className = "slider";
+      //     message.style.setProperty("--startPos", start.bottom + "px");
+      //     message.style.setProperty("--endPos", end.bottom + "px");
+      //   }
+      // }
     }
 
     for (let i = 0; i < messages.length; i++) {
