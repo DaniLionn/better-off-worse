@@ -2,7 +2,7 @@ const bpm = 145;
 const messageLimit = 12;
 
 const tick = 60_000 / bpm;
-
+let totalTicks = 0;
 let messages = [];
 let video, subCount, viewers;
 
@@ -104,7 +104,9 @@ async function mainLoop() {
   }
 
   if (!video.paused && video.currentTime >= 30) {
-    createMessage();
+    if (totalTicks % 2) {
+      createMessage();
+    }
 
     for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
@@ -128,6 +130,8 @@ async function mainLoop() {
       messages.splice(messageLimit + 1, 1);
     }
   }
+
+  totalTicks++;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
